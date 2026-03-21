@@ -1,14 +1,10 @@
-# 🧵 CraftGuard
+#  CraftGuard
 ### AI-powered cultural design similarity detector for traditional Indian crafts
 
-![Python](https://img.shields.io/badge/Python-3.10+-blue?style=flat-square)
-![Status](https://img.shields.io/badge/Status-Week%203%20Complete-green?style=flat-square)
-![Dataset](https://img.shields.io/badge/Dataset-655%20images-orange?style=flat-square)
-![License](https://img.shields.io/badge/License-MIT-purple?style=flat-square)
 
 ---
 
-## 🌍 The Problem
+##  The Problem
 
 Traditional Indian crafts like **Kolhapuri chappals**, **Banarasi silk**, and **Ajrakh block prints** have been practiced by artisan communities for hundreds of years. Many hold **Geographical Indication (GI)** status — a legal protection similar to copyright.
 
@@ -21,7 +17,7 @@ The artisans who created these traditions see none of the profit.
 
 ---
 
-## 💡 The Solution
+##  The Solution
 
 **CraftGuard** is a computer vision tool that:
 1. Takes any fashion product image as input
@@ -32,18 +28,18 @@ Built with CLIP embeddings + FAISS vector search — no expensive APIs, no subsc
 
 ---
 
-## 🗂️ Project Roadmap
+##  Project Roadmap
 
 | Week | Task | Status |
 |------|------|--------|
 | 1 | Dataset collection — 655 images across 8 craft categories | ✅ Complete |
 | 2 | CLIP embeddings + FAISS index | ✅ Complete |
 | 3 | Streamlit web app + similarity search UI | ✅ Complete |
-| 4 | Deploy to Hugging Face Spaces + write-up | ⏳ Upcoming |
+
 
 ---
 
-## 📦 Week 1 — Dataset
+##  Week 1 — Dataset
 
 ### Craft categories collected
 
@@ -106,7 +102,7 @@ python notebooks/week1_dataset.ipynb
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Tool | Purpose |
 |------|---------|
@@ -116,11 +112,11 @@ python notebooks/week1_dataset.ipynb
 | `CLIP` | Generate 512-dim image embeddings |
 | `FAISS` | Fast cosine similarity search |
 | `Streamlit` | Web app frontend |
-| `Hugging Face Spaces` *(week 4)* | Free deployment |
+
 
 ---
 
-## 🖥️ Week 3 — Streamlit Web App
+##  Week 3 — Streamlit Web App
 
 ### What it does
 
@@ -154,22 +150,11 @@ The app correctly identifies craft similarity for close-up product images with s
 **Current limitation — whole image matching:**
 CLIP analyses the entire uploaded image. If a fashion photo shows a full outfit (model on runway), it matches the overall visual style rather than isolating the specific craft element (e.g. the sandal).
 
-**Fix planned for Week 4:**
-Add a YOLO object detection step before CLIP to automatically crop the relevant region (footwear, textile, accessory) before running similarity search. This is the standard production approach for fine-grained retrieval.
 
-```
-Current:  full image → CLIP → similarity
-Planned:  full image → YOLO crop → CLIP → similarity
-```
-
-**Other improvements planned:**
-- Expand dataset beyond 8 crafts to 20+ categories
-- Add more global craft databases (Ecuadorian textiles, African prints)
-- Allow users to draw a bounding box on the uploaded image to select the region manually
 
 ---
 
-## 🧠 Week 2 — CLIP Embeddings + FAISS Index
+##  Week 2 — CLIP Embeddings + FAISS Index
 
 ### How it works
 
@@ -212,7 +197,7 @@ find_similar("your_image.jpg", top_k=5)
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ```bash
 git clone https://github.com/yourusername/craftguard
@@ -222,19 +207,12 @@ pip install -r requirements.txt
 
 Open `notebooks/week1_dataset.ipynb` in Google Colab and run all cells.
 
----
 
-## 🤝 Why This Matters
-
-This project is built in **Jaipur, Rajasthan** — one of India's richest craft hubs — home to block printers, leheriya weavers, blue pottery artisans, and more. The goal is to give these communities a technical tool to defend their heritage.
-
-If you work with craft councils, IP law, or fashion ethics — let's connect.
 
 ---
 
-## 📬 Contact
 
-Built by [Your Name] · [LinkedIn URL] · [Email]
+Built by [Bhavini Kasana] · [https://www.linkedin.com/in/bhavini-kasana-0b65151a9/] · [bhavini.kasana@edu.esiee.fr]
 
 ---
 
