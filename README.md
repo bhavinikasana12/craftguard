@@ -2,10 +2,6 @@
 
 ### AI-powered cultural design similarity detector for traditional Indian crafts
 
-[![Python](https://img.shields.io/badge/Python-3.10+-blue?style=flat-square)](https://python.org)
-[![Status](https://img.shields.io/badge/Status-Week%203%20Complete-green?style=flat-square)]()
-[![Dataset](https://img.shields.io/badge/Dataset-655%20images-orange?style=flat-square)]()
-[![License](https://img.shields.io/badge/License-MIT-purple?style=flat-square)]()
 
 ---
 
@@ -23,7 +19,7 @@ The artisans who created these traditions see none of the profit.
 
 ---
 
-## 🔬 The Research Gap
+##  The Research Gap
 
 Existing tools in this space focus on **archiving and digitising** traditional designs:
 
@@ -40,7 +36,7 @@ CraftGuard is an attempt to address this gap.
 
 ---
 
-## 💡 The Solution
+##  The Solution
 
 **CraftGuard** is a computer vision tool that:
 
@@ -48,11 +44,11 @@ CraftGuard is an attempt to address this gap.
 2. Compares it against a database of 655 traditional Indian craft images
 3. Returns a **similarity score**, the **origin craft**, and a **GI status flag**
 
-Built with CLIP embeddings + FAISS vector search — no expensive APIs, no subscriptions, fully open source.
+Built with CLIP embeddings + FAISS vector search.
 
 ---
 
-## 🧠 How It Works — CLIP + FAISS Explained
+##  How It Works — CLIP + FAISS Explained
 
 ### What is CLIP?
 
@@ -92,11 +88,11 @@ FAISS organises all embeddings into an index and searches through them in millis
 | 1 | Dataset collection — 655 images across 8 craft categories | ✅ Complete |
 | 2 | CLIP embeddings + FAISS index | ✅ Complete |
 | 3 | Streamlit web app + similarity search UI | ✅ Complete |
-| 4 | Deploy on Hugging Face Spaces | 🔄 Upcoming |
+
 
 ---
 
-## 📦 Dataset
+##  Dataset
 
 ### Craft categories
 
@@ -149,7 +145,7 @@ craftguard/
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Tool | Purpose |
 |------|---------|
@@ -159,11 +155,11 @@ craftguard/
 | `CLIP` (ViT-B/32) | Generate 512-dim image embeddings |
 | `FAISS` | Fast cosine similarity search |
 | `Streamlit` | Web app frontend |
-| `Hugging Face Spaces` *(week 4)* | Free deployment |
+
 
 ---
 
-## 🖥️ Running Locally
+##  Running Locally
 
 ```bash
 git clone https://github.com/bhavinikasana12/craftguard
@@ -178,7 +174,7 @@ KMP_DUPLICATE_LIB_OK=TRUE streamlit run app.py
 
 ---
 
-## 📊 Results
+##  Results
 
 CraftGuard uses a similarity threshold of **78%** — scores below this are not considered a match.
 
@@ -193,7 +189,7 @@ CraftGuard uses a similarity threshold of **78%** — scores below this are not 
 
 ---
 
-## ⚠️ Known Limitations
+##  Known Limitations
 
 ### 1. CLIP was not trained on Indian crafts
 CLIP was trained on 400 million general internet images — not on Indian craft-specific data. It understands broad visual categories ("patterned textile", "flat sandal") but cannot reliably distinguish between visually similar crafts such as Ajrakh vs Banarasi, or Ikat vs Phulkari. These craft categories share colour palettes, geometric patterns, and textile structures that CLIP treats as equivalent.
@@ -209,7 +205,7 @@ CLIP analyses the entire uploaded image. A full runway photo (model + background
 
 ---
 
-## 🚀 Future Work
+##  Future Work
 
 | Improvement | What it solves |
 |-------------|---------------|
@@ -221,8 +217,7 @@ CLIP analyses the entire uploaded image. A full runway photo (model + background
 
 ---
 
-## 📬 Contact
 
-Built by Bhavini Kasana · [LinkedIn](https://www.linkedin.com/in/bhavini-kasana-0b65151a9/) · [bhavini.kasana@edu.esiee.fr](mailto:bhavini.kasana@edu.esiee.fr)
+Built by Bhavini Kasana · (https://www.linkedin.com/in/bhavini-kasana-0b65151a9/) · (bhavini.kasana@edu.esiee.fr)
 
 *This is a portfolio project built to demonstrate applied ML for social impact.*
