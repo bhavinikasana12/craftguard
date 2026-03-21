@@ -222,19 +222,12 @@ pip install -r requirements.txt
 
 Open `notebooks/week1_dataset.ipynb` in Google Colab and run all cells.
 
----
-
-## 🤝 Why This Matters
-
-This project is built in **Jaipur, Rajasthan** — one of India's richest craft hubs — home to block printers, leheriya weavers, blue pottery artisans, and more. The goal is to give these communities a technical tool to defend their heritage.
-
-If you work with craft councils, IP law, or fashion ethics — let's connect.
 
 ---
 
 ## 📬 Contact
 
-Built by [Your Name] · [LinkedIn URL] · [Email]
+Built by Bhavini Kasana · (https://www.linkedin.com/in/bhavini-kasana-0b65151a9/) · [bhavini.kasana@edu.esiee.fr]
 
 ---
 
