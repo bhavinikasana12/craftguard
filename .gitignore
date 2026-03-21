@@ -1,0 +1,13 @@
+# large data files — too big for GitHub
+data/images/
+data/embeddings.npy
+data/craftguard.index
+
+# python
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# environment
+.env

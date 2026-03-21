@@ -1,0 +1,9 @@
+streamlit
+torch
+torchvision
+transformers
+faiss-cpu
+pillow
+pandas
+tqdm
+icrawler
