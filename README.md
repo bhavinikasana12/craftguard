@@ -1,14 +1,20 @@
-#  CraftGuard
+# 🧵 CraftGuard
+
 ### AI-powered cultural design similarity detector for traditional Indian crafts
 
+[![Python](https://img.shields.io/badge/Python-3.10+-blue?style=flat-square)](https://python.org)
+[![Status](https://img.shields.io/badge/Status-Week%203%20Complete-green?style=flat-square)]()
+[![Dataset](https://img.shields.io/badge/Dataset-655%20images-orange?style=flat-square)]()
+[![License](https://img.shields.io/badge/License-MIT-purple?style=flat-square)]()
 
 ---
 
-##  The Problem
+## 🌍 The Problem
 
-Traditional Indian crafts like **Kolhapuri chappals**, **Banarasi silk**, and **Ajrakh block prints** have been practiced by artisan communities for hundreds of years. Many hold **Geographical Indication (GI)** status — a legal protection similar to copyright.
+Traditional Indian crafts like **Kolhapuri chappals**, **Banarasi silk**, and **Ajrakh block prints** have been practiced by artisan communities for hundreds of years. Many hold **Geographical Indication (GI)** status — a legal protection recognising the cultural and economic rights of the communities who created them.
 
 Yet global fashion brands have repeatedly copied these designs without credit or compensation:
+
 - **Prada** (2025) — sold $1,200 sandals nearly identical to Kolhapuri chappals
 - **Gucci** (2019) — sold a Sikh turban as a fashion accessory for $790
 - **Loewe** (2018) — used Ecuadorian indigenous textile patterns with no attribution
@@ -17,31 +23,82 @@ The artisans who created these traditions see none of the profit.
 
 ---
 
-##  The Solution
+## 🔬 The Research Gap
+
+Existing tools in this space focus on **archiving and digitising** traditional designs:
+
+| Tool | Organisation | What it does |
+|------|-------------|--------------|
+| VisioNxt | Ministry of Textiles + NIFT | AI trend forecasting for Indian fashion |
+| DigiBunai | IIT Guwahati | Digitises traditional weaving patterns |
+| TCS Intelligent Saree Platform | Tata Consultancy Services | Digitises Kanjivaram saree designs |
+| Kosha.ai | Private | IoT-based product authentication |
+
+**None of these tools detect when a commercial fashion product visually copies a traditional craft pattern.** There is currently no open-source model trained specifically to distinguish between Indian craft categories such as Ajrakh, Banarasi, Phulkari, or Ikat.
+
+CraftGuard is an attempt to address this gap.
+
+---
+
+## 💡 The Solution
 
 **CraftGuard** is a computer vision tool that:
+
 1. Takes any fashion product image as input
-2. Compares it against a database of traditional Indian craft patterns
+2. Compares it against a database of 655 traditional Indian craft images
 3. Returns a **similarity score**, the **origin craft**, and a **GI status flag**
 
 Built with CLIP embeddings + FAISS vector search — no expensive APIs, no subscriptions, fully open source.
 
 ---
 
-##  Project Roadmap
+## 🧠 How It Works — CLIP + FAISS Explained
+
+### What is CLIP?
+
+CLIP (Contrastive Language-Image Pretraining) is a model developed by OpenAI, trained on 400 million image-text pairs from the internet. It converts any image into a list of 512 numbers — called an **embedding** — that captures the visual meaning of the image.
+
+```
+Kolhapuri sandal image → CLIP → [0.23, 0.87, 0.12, ...]  512 numbers
+Prada sandal image     → CLIP → [0.21, 0.85, 0.14, ...]  512 numbers
+                                          ↑
+                               similar numbers = similar images
+```
+
+Two visually similar images produce similar embeddings. This allows CraftGuard to compare an unknown fashion product against every craft image in the database — without needing to label or describe the query image.
+
+### What is FAISS?
+
+FAISS (Facebook AI Similarity Search) is a library developed by Meta for searching through large collections of vectors efficiently. Without FAISS, finding the most similar image in a database of 655 embeddings would require 655 individual comparisons. At millions of images, this becomes impractically slow.
+
+FAISS organises all embeddings into an index and searches through them in milliseconds — making it the natural pairing for CLIP in similarity search applications.
+
+```
+655 craft images
+    → CLIP converts each to 512 numbers
+        → FAISS stores all 655 × 512 numbers in an index
+            → User uploads image
+                → CLIP converts it to 512 numbers
+                    → FAISS searches index in < 1 second
+                        → Returns top 5 most similar craft images
+```
+
+---
+
+## 🗂️ Project Roadmap
 
 | Week | Task | Status |
 |------|------|--------|
 | 1 | Dataset collection — 655 images across 8 craft categories | ✅ Complete |
 | 2 | CLIP embeddings + FAISS index | ✅ Complete |
 | 3 | Streamlit web app + similarity search UI | ✅ Complete |
-
+| 4 | Deploy on Hugging Face Spaces | 🔄 Upcoming |
 
 ---
 
-##  Week 1 — Dataset
+## 📦 Dataset
 
-### Craft categories collected
+### Craft categories
 
 | Craft | State | GI Protected | Images |
 |-------|-------|-------------|--------|
@@ -55,6 +112,14 @@ Built with CLIP embeddings + FAISS vector search — no expensive APIs, no subsc
 | Leheriya tie-dye | Rajasthan | ❌ No | 71 |
 
 **Total: 655 images**
+
+### Collection method
+
+Used `icrawler` (Google Images → Bing fallback) to scrape images, then:
+
+- Filtered out images smaller than 100×100px
+- Resized all images to **224×224px** (standard CLIP input size)
+- Logged source URL and license per image in `metadata.csv`
 
 ### Folder structure
 
@@ -70,62 +135,38 @@ craftguard/
 │   │   ├── phulkari/
 │   │   ├── chanderi/
 │   │   └── leheriya/
+│   ├── embeddings.npy
+│   ├── embeddings_meta.csv
+│   ├── craftguard.index
 │   └── metadata.csv
 ├── notebooks/
 │   ├── week1_dataset.ipynb
 │   └── week2_embeddings.ipynb
+├── app.py
+├── requirements.txt
 └── README.md
-```
-
-### Metadata schema
-
-Each image is logged in `metadata.csv` with the following fields:
-
-```
-image_id | craft_name | state | gi_status | source_url | license
-```
-
-### How we collected it
-
-Used `icrawler` (Google Images → Bing fallback) to scrape images, then:
-- Filtered out images smaller than 100×100px (logos, icons)
-- Resized all images to **224×224px** (standard CLIP input size)
-- Logged source URL and license per image
-
-```python
-# Install
-pip install icrawler pillow tqdm pandas
-
-# Run
-python notebooks/week1_dataset.ipynb
 ```
 
 ---
 
-##  Tech Stack
+## 🛠️ Tech Stack
 
 | Tool | Purpose |
 |------|---------|
 | `icrawler` | Image scraping from Google/Bing |
 | `Pillow` | Image resizing and cleaning |
 | `pandas` | Metadata logging (CSV) |
-| `CLIP` | Generate 512-dim image embeddings |
+| `CLIP` (ViT-B/32) | Generate 512-dim image embeddings |
 | `FAISS` | Fast cosine similarity search |
 | `Streamlit` | Web app frontend |
-
+| `Hugging Face Spaces` *(week 4)* | Free deployment |
 
 ---
 
-##  Week 3 — Streamlit Web App
-
-### What it does
-
-Upload any fashion product image → CraftGuard finds the 5 most similar traditional craft patterns from the database → returns similarity score, origin state, and GI protection status.
-
-### How to run locally
+## 🖥️ Running Locally
 
 ```bash
-git clone https://github.com/yourusername/craftguard
+git clone https://github.com/bhavinikasana12/craftguard
 cd craftguard
 python3 -m venv venv
 source venv/bin/activate
@@ -135,85 +176,53 @@ pip install streamlit torch torchvision transformers faiss-cpu pillow pandas
 KMP_DUPLICATE_LIB_OK=TRUE streamlit run app.py
 ```
 
-### Results
+---
 
-The app correctly identifies craft similarity for close-up product images with scores typically in the 60–80% range for genuine matches.
+## 📊 Results
 
-| Query | Top Match | Score |
-|-------|-----------|-------|
-| Prada sandal close-up | Kolhapuri | 70.3% |
-| Ajrakh print fabric | Ajrakh | ~85% |
-| Random Nike shoe | Mixed low scores | <50% |
+CraftGuard uses a similarity threshold of **78%** — scores below this are not considered a match.
 
-### Known limitations & future work
-
-**Current limitation — whole image matching:**
-CLIP analyses the entire uploaded image. If a fashion photo shows a full outfit (model on runway), it matches the overall visual style rather than isolating the specific craft element (e.g. the sandal).
-
-
+| Query image | Top match | Score | Correct? |
+|-------------|-----------|-------|----------|
+| Phulkari dupatta (close-up) | Phulkari | 83.3% | ✅ |
+| Chanderi saree (close-up) | Chanderi | 82.6% | ✅ |
+| Ajrakh print fabric | Banarasi | 81.8% | ⚠️ Wrong craft, right category |
+| Western leather handbag | No match | — | ✅ |
+| Plain blue Western dress | No match | — | ✅ |
+| Birkenstock sandal | Kolhapuri | 88.1% | ❌ Shape false positive |
 
 ---
 
-##  Week 2 — CLIP Embeddings + FAISS Index
+## ⚠️ Known Limitations
 
-### How it works
+### 1. CLIP was not trained on Indian crafts
+CLIP was trained on 400 million general internet images — not on Indian craft-specific data. It understands broad visual categories ("patterned textile", "flat sandal") but cannot reliably distinguish between visually similar crafts such as Ajrakh vs Banarasi, or Ikat vs Phulkari. These craft categories share colour palettes, geometric patterns, and textile structures that CLIP treats as equivalent.
 
-Every image is converted into a list of 512 numbers called an **embedding** — a mathematical fingerprint of what the image looks like. Two visually similar images will have similar embeddings.
+### 2. Shape matching causes false positives for footwear
+A Birkenstock sandal scores 88.1% similarity to Kolhapuri chappals — not because it copies the craft, but because both are flat open sandals of similar colour. CLIP matches overall visual shape and tone, not craft-specific pattern elements.
 
-```
-craft image → CLIP model → [0.23, 0.87, 0.12, ...] (512 numbers)
-query image → CLIP model → [0.21, 0.85, 0.14, ...] (512 numbers)
-                                    ↓
-                         cosine similarity = 0.94 → very similar!
-```
+### 3. Whole-image matching
+CLIP analyses the entire uploaded image. A full runway photo (model + background + outfit) produces less reliable results than a close-up product shot. The model matches the overall scene rather than isolating the specific product.
 
-FAISS stores all 665 embeddings and searches through them in milliseconds.
-
-### What we built
-
-| File | Description |
-|------|-------------|
-| `data/embeddings.npy` | 665 × 512 matrix of CLIP embeddings |
-| `data/embeddings_meta.csv` | Maps each embedding back to craft name + image path |
-| `data/craftguard.index` | FAISS index for fast similarity search |
-
-### Key numbers
-
-- **665 images** embedded successfully
-- **512 dimensions** per embedding (CLIP ViT-B/32)
-- **< 1 second** to search all 665 embeddings via FAISS
-
-### How to run
-
-```python
-pip install torch torchvision transformers faiss-cpu
-
-# Generate embeddings
-python notebooks/week2_embeddings.ipynb
-
-# Query similarity
-find_similar("your_image.jpg", top_k=5)
-```
+### 4. Small dataset
+655 images across 8 categories (~82 per category) is sufficient for a prototype but too small for reliable fine-grained classification.
 
 ---
 
-##  Getting Started
+## 🚀 Future Work
 
-```bash
-git clone https://github.com/yourusername/craftguard
-cd craftguard
-pip install -r requirements.txt
-```
-
-Open `notebooks/week1_dataset.ipynb` in Google Colab and run all cells.
-
-
+| Improvement | What it solves |
+|-------------|---------------|
+| **Fine-tune CLIP** on craft-specific data | Teach the model the difference between Ajrakh and Banarasi at a pattern level |
+| **Add a YOLO pre-filter** | Detect and crop the specific product (sandal, fabric) before passing to CLIP — eliminates background noise |
+| **Add a negative class** | Train the model on ~500 generic Western products so it learns what a non-match looks like |
+| **Expand the dataset** | More images per category improves embedding quality and reduces inter-category confusion |
+| **Publish fine-tuned model on Hugging Face** | Make it the first open-source model for Indian craft classification |
 
 ---
 
+## 📬 Contact
 
-Built by [Bhavini Kasana] · [https://www.linkedin.com/in/bhavini-kasana-0b65151a9/] · [bhavini.kasana@edu.esiee.fr]
-
----
+Built by Bhavini Kasana · [LinkedIn](https://www.linkedin.com/in/bhavini-kasana-0b65151a9/) · [bhavini.kasana@edu.esiee.fr](mailto:bhavini.kasana@edu.esiee.fr)
 
 *This is a portfolio project built to demonstrate applied ML for social impact.*
