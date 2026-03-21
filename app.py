@@ -63,6 +63,8 @@ if uploaded:
             craft   = row["craft_name"]
             info    = GI_INFO.get(craft, {"gi": "Unknown", "state": "Unknown"})
             sim_pct = round(float(score) * 100, 1)
+            if sim_pct < 78:
+                continue  # skip low confidence matches
             with st.expander(f"#{rank} — {craft.title()}  ({sim_pct}% similar)", expanded=rank==1):
                 c1, c2 = st.columns([1, 2])
                 with c1:
@@ -78,12 +80,12 @@ if uploaded:
     top_craft = meta_df.iloc[indices[0][1]]["craft_name"]
     top_score = float(scores[0][1]) * 100
     top_gi    = GI_INFO.get(top_craft, {}).get("gi", "")
-    if top_score > 70 and "✅" in top_gi:
+    if top_score > 82 and "✅" in top_gi:
         st.error(f"⚠️ High similarity detected! This design is {top_score:.1f}% similar to {top_craft.title()} — a GI-protected craft. Commercial use without attribution may violate GI protections.")
-    elif top_score > 50 and "✅" in top_gi:
+    elif top_score > 78 and "✅" in top_gi:
         st.warning(f"🔍 Moderate similarity to {top_craft.title()} ({top_score:.1f}%). Review recommended.")
     else:
-        st.success("✅ No strong matches to GI-protected craft patterns detected.")
+        st.success("✅ No significant craft similarity detected. Scores below 78% are not considered a match.")
 else:
     st.info("👆 Upload an image above to get started.")
     cols = st.columns(4)
