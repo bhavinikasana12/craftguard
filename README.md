@@ -39,7 +39,6 @@ Built with CLIP embeddings + FAISS vector search — no expensive APIs, no subsc
 | 1 | Dataset collection — 655 images across 8 craft categories | ✅ Complete |
 | 2 | CLIP embeddings + FAISS index | ✅ Complete |
 | 3 | Streamlit web app + similarity search UI | ✅ Complete |
-| 4 | Deploy to Hugging Face Spaces + write-up | ⏳ Upcoming |
 
 ---
 
@@ -154,18 +153,9 @@ The app correctly identifies craft similarity for close-up product images with s
 **Current limitation — whole image matching:**
 CLIP analyses the entire uploaded image. If a fashion photo shows a full outfit (model on runway), it matches the overall visual style rather than isolating the specific craft element (e.g. the sandal).
 
-**Fix planned for Week 4:**
-Add a YOLO object detection step before CLIP to automatically crop the relevant region (footwear, textile, accessory) before running similarity search. This is the standard production approach for fine-grained retrieval.
 
-```
 Current:  full image → CLIP → similarity
-Planned:  full image → YOLO crop → CLIP → similarity
 ```
-
-**Other improvements planned:**
-- Expand dataset beyond 8 crafts to 20+ categories
-- Add more global craft databases (Ecuadorian textiles, African prints)
-- Allow users to draw a bounding box on the uploaded image to select the region manually
 
 ---
 
