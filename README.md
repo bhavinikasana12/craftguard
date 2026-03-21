@@ -1,11 +1,11 @@
-# 🧵 CraftGuard
+#  CraftGuard
 
 ### AI-powered cultural design similarity detector for traditional Indian crafts
 
 
 ---
 
-## 🌍 The Problem
+##  The Problem
 
 Traditional Indian crafts like **Kolhapuri chappals**, **Banarasi silk**, and **Ajrakh block prints** have been practiced by artisan communities for hundreds of years. Many hold **Geographical Indication (GI)** status — a legal protection recognising the cultural and economic rights of the communities who created them.
 
@@ -81,7 +81,7 @@ FAISS organises all embeddings into an index and searches through them in millis
 
 ---
 
-## 🗂️ Project Roadmap
+##  Project Roadmap
 
 | Week | Task | Status |
 |------|------|--------|
