@@ -180,13 +180,17 @@ CraftGuard uses a similarity threshold of **78%** — scores below this are not 
 
 | Query image | Top match | Score | Correct? |
 |-------------|-----------|-------|----------|
+| Kalamkari fabric (close-up) | Kalamkari | 91.7% | ✅ |
+| Ajrakh block print (close-up) | Ajrakh | 87.9% | ✅ |
 | Phulkari dupatta (close-up) | Phulkari | 83.3% | ✅ |
 | Chanderi saree (close-up) | Chanderi | 82.6% | ✅ |
-| Ajrakh print fabric | Banarasi | 81.8% | ⚠️ Wrong craft, right category |
+| Ajrakh print (lifestyle photo) | Banarasi | 81.8% | ⚠️ Wrong craft, right category |
 | Western leather handbag | No match | — | ✅ |
 | Plain blue Western dress | No match | — | ✅ |
 | Birkenstock sandal | Kolhapuri | 88.1% | ❌ Shape false positive |
 
+> Best results are achieved with close-up product shots on plain backgrounds. 
+> Full outfit or lifestyle photos produce less reliable matches due to background noise.
 ---
 
 ##  Known Limitations
