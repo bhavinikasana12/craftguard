@@ -222,6 +222,6 @@ CLIP analyses the entire uploaded image. A full runway photo (model + background
 ---
 
 
-Built by Bhavini Kasana · (https://www.linkedin.com/in/bhavini-kasana-0b65151a9/) · (bhavini.kasana@edu.esiee.fr)
+Built by Bhavini Kasana · [LinkedIn](https://www.linkedin.com/in/bhavini-kasana-0b65151a9/) · [Email](mailto:bhavini.kasana@edu.esiee.fr)
 
 *This is a portfolio project built to demonstrate applied ML for social impact.*
